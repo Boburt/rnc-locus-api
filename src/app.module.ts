@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { APP_GUARD } from '@nestjs/core';
 
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
@@ -12,6 +13,10 @@ import { envValidationSchema } from './config/env.validation';
 
 import { Locus } from './modules/locus/entities/locus.entity';
 import { LocusMember } from './modules/locus/entities/locus-member.entity';
+
+import { AuthModule } from './modules/auth/auth.module';
+import { JwtAuthGuard } from './common/guards/jwt-auth.guards';
+import { RolesGuard } from './common/guards/roles.guard';
 
 @Module({
   imports: [
@@ -44,8 +49,17 @@ import { LocusMember } from './modules/locus/entities/locus-member.entity';
         }
       })
     }),
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, {
+    provide: APP_GUARD,
+    useClass: JwtAuthGuard,
+  },
+  {
+    provide: APP_GUARD,
+    useClass: RolesGuard,
+  },
+],
 })
 export class AppModule {}
