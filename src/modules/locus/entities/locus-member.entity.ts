@@ -2,13 +2,13 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { MembershipStatus } from '../enums/membership-status.enum';
 import { Locus } from './locus.entity';
 
-@Entity('rnc_locus_member')
+@Entity('rnc_locus_members')
 export class LocusMember {
     @PrimaryColumn({name: 'id', type: 'bigint'})
     locusMemberId: string;
 
     @Column({type: 'text'})
-    ursTaxId: string;
+    ursTaxid: string;
 
     @Column({type: 'int'})
     regionId: number;

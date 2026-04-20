@@ -17,6 +17,7 @@ import { LocusMember } from './modules/locus/entities/locus-member.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guards';
 import { RolesGuard } from './common/guards/roles.guard';
+import { LocusModule } from './modules/locus/locus.module';
 
 @Module({
   imports: [
@@ -43,13 +44,14 @@ import { RolesGuard } from './common/guards/roles.guard';
         synchronize: false,
         migrationsRun: false,
         namingStrategy: new SnakeNamingStrategy(),
-        logging: ['error', 'warn'],
+        logging: ['error', 'warn'] as const,
         extra: {
           max: 10,
         }
       })
     }),
     AuthModule,
+    LocusModule,
   ],
   controllers: [AppController],
   providers: [AppService, {
