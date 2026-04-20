@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
@@ -53,8 +51,8 @@ import { LocusModule } from './modules/locus/locus.module';
     AuthModule,
     LocusModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, {
+  providers: [
+  {
     provide: APP_GUARD,
     useClass: JwtAuthGuard,
   },
